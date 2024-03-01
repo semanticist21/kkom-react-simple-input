@@ -7,11 +7,11 @@ Only available on React `18.0.0` or higher
 ## Installation
 
 ```shell
-yarn add @kkomjang/simple-input
+yarn add @kkomjang/react-simple-input
 # or
-npm install @kkomjang/simple-input --save
+npm install @kkomjang/react-simple-input --save
 # or
-pnpm add @kkomjang/simple-input
+pnpm add @kkomjang/react-simple-input
 ```
 
 # example usage
