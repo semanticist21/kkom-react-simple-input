@@ -22,6 +22,9 @@ devDependencies:
   gulp-typescript:
     specifier: 6.0.0-alpha.1
     version: 6.0.0-alpha.1(typescript@5.3.3)
+  merge2:
+    specifier: ^1.4.1
+    version: 1.4.1
   terser:
     specifier: ^5.28.1
     version: 5.28.1
@@ -1425,6 +1428,11 @@ packages:
       stack-trace: 0.0.10
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /merge2@1.4.1:
+    resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
+    engines: {node: '>= 8'}
     dev: true
 
   /micromatch@3.1.10:
