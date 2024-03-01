@@ -1,17 +1,25 @@
 {
-  "name": "@kkom/react-simple-input",
-  "version": "0.1.0",
+  "name": "@kkomjang/react-simple-input",
+  "private": false,
+  "version": "0.1.1",
   "description": "declarative simplified input/checkbox handlers for react.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "/dist"
   ],
+  "scripts": {
+    "build": "npx gulp"
+  },
   "dependencies": {
     "react": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.61",
+    "gulp": "^4.0.2",
+    "gulp-terser": "^2.1.0",
+    "gulp-typescript": "6.0.0-alpha.1",
+    "terser": "^5.28.1",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
@@ -23,5 +31,19 @@
     "checkbox",
     "handler",
     "simple"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/semanticist21/kkom-simple-input/issues",
+    "email": "semanticist0@gmail.com"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "jwp",
+    "email": "semanticist0@gmail.com",
+    "url": "https://github.com/semanticist21"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/semanticist21/kkom-simple-input"
+  }
 }

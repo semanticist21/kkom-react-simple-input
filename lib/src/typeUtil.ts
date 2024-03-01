@@ -2,9 +2,7 @@ export const toReadOnly = <T>(...args: T[]) => {
   return [...args] as const;
 };
 
-export const createEmptyObj = <T extends string, U extends any>(): {
-  [K in T]: U;
-} => {
+export const createEmptyObj = <T extends string, U extends any>() => {
   const obj = {} as { [K in T]: U };
 
   return obj;
