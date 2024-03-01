@@ -1,0 +1,27 @@
+{
+  "name": "@kkom/react-simple-input",
+  "version": "0.1.0",
+  "description": "declarative simplified input/checkbox handlers for react.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "dependencies": {
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.61",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "keywords": [
+    "react",
+    "input",
+    "checkbox",
+    "handler",
+    "simple"
+  ]
+}
