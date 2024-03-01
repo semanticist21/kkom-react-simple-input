@@ -140,11 +140,11 @@ export const useInputHandle = <
         // when name
         else {
           if (typeof name !== "string") {
-            throw new Error("Id is not string or undefined");
+            throw new Error("Name is not string or undefined");
           }
 
           if (stringKeys.indexOf(name as StrKeyType) === -1) {
-            throw new Error("Id is not valid key");
+            throw new Error("Name is not valid key");
           }
 
           setValues((prev) => ({
