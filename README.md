@@ -1,4 +1,4 @@
-`@kkom/simple-unput `is a typescript library for easily implementing input handlers.
+`@kkom/simple-unput` is a typescript library for easily implementing input handlers.
 
 It's declarative and intende to be simple and type-safe when using typescript in react.
 
