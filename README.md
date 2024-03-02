@@ -32,7 +32,7 @@ export const Example = () => {
   // handleNumber - function to handle number input change
   const { handleString, handleCheck, handleNumber } = handlers;
 
-  // stringKeys - ["name", "email"]
+  // stringKeys - ["name", "password"]
   // boolKeys - ["isAgreed"]
   // numberKeys - ["views"]
   const { stringKeys, boolKeys, numberKeys } = keys;
