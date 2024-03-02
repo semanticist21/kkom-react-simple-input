@@ -20,8 +20,8 @@ interface UseInputType<
    */
   setValues: React.Dispatch<
     React.SetStateAction<
-      { [K in T[number]]: K } & { [K in E[number]]: K } & {
-        [K in U[number]]: K;
+      { [K in T[number]]: string } & { [K in E[number]]: boolean } & {
+        [K in U[number]]: number;
       }
     >
   >;
