@@ -1,7 +1,7 @@
 {
   "name": "@kkomjang/react-simple-input",
   "private": false,
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "declarative simplified input/checkbox handlers for react.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
