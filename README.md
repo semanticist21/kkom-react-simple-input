@@ -1,6 +1,6 @@
 `@kkomjang/react-simple-input` is a typescript library for easily implementing input handlers.
 
-It's declarative and intende to be simple and type-safe when using typescript in react.
+It's declarative and intended to be simple and type-safe when using typescript in react.
 
 Only available on React `18.0.0` or higher
 
