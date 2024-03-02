@@ -14,7 +14,7 @@ npm install @kkomjang/react-simple-input --save
 pnpm add @kkomjang/react-simple-input
 ```
 
-# example usage
+## example usage
 
 ```ts
 import useInputHandle from "../react-simple-input";
