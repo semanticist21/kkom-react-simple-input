@@ -11,7 +11,7 @@ yarn add @kkoms/react-simple-input
 # or
 npm install @kkoms/react-simple-input --save
 # or
-pnpm add @kkom`/react-simple-input
+pnpm add @kkoms/react-simple-input
 ```
 
 ## example usage
