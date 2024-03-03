@@ -14,7 +14,7 @@ npm install @kkoms/react-simple-input --save
 pnpm add @kkoms/react-simple-input
 ```
 
-## example usage
+## Example usage
 
 ```typescript
 import useInputHandle from "./dist";
