@@ -40,7 +40,7 @@ function Example() {
   // numberKeys - ["age"]
   const { stringKeys, boolKeys, numberKeys } = keys;
 
-  // put these at 'onChange' or 'onChecked'.
+  // put these at 'onChange'.
   // give true if you want to use id.
   const { handleString, handleCheck, handleNumber } = handlers;
 
