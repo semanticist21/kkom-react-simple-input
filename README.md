@@ -39,6 +39,10 @@ function Example() {
   // numberKeys - ["age"]
   const { stringKeys, boolKeys, numberKeys } = keys;
 
+  // put these at 'onChange' or 'onChecked'.
+  // give true if you want to use id.
+  const { handleString, handleCheck, handleNumber } = handlers;
+
   // making your own custom handler
   const customHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === matching.email) {
