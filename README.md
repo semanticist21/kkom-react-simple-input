@@ -26,8 +26,9 @@ function Example() {
       strings: ["email", "password"],
       booleans: ["checked"],
       numbers: ["age"],
+      // [optional] you can set default value if you want bind value to input element.
+      // If you do not give defaults, string - '', boolean - flase, number - 0.
       defaults: {
-        // you should set default value if you want bind value to input element, as the initial object is empty.
         string: "",
         // boolean: false,
         // number: 0,
@@ -101,49 +102,5 @@ function Example() {
 }
 
 export default Example;
-
-```
-
-or you can make your custom handler.
-
-```echarts
-import useInputHandle from "../react-simple-input";
-
-export const Example = () => {
-  // declaration
-  const { values, setValues, matching, handlers, keys } = useInputHandle({
-    strings: ["name", "password"],
-    booleans: ["isAgreed"],
-    numbers: ["views"],
-  });
-
-  // handleString - function to handle string input change
-  // handleCheck - function to handle checkbox input change
-  // handleNumber - function to handle number input change
-  const { handleString, handleCheck, handleNumber } = handlers;
-
-  // stringKeys - ["name", "password"]
-  // boolKeys - ["isAgreed"]
-  // numberKeys - ["views"]
-  const { stringKeys, boolKeys, numberKeys } = keys;
-
-  console.log(values.name);
-  console.log(values.password);
-  console.log(values.isAgreed);
-  console.log(values.views);
-
-  return (
-    <div>
-      <input id={matching.name} onChange={handleString(true)} />
-      <input name={matching.password} onChange={handleString()} />
-      <input
-        type="checkbox"
-        name={matching.isAgreed}
-        onChange={handleCheck()}
-      />
-      <input type="number" name={matching.views} onChange={handleNumber()} />
-    </div>
-  );
-};
 
 ```

@@ -111,9 +111,15 @@ export const useInputHandle = <
   >(
     Object.freeze(
       Object.assign(
-        createEmptyObj<StrKeyType, string>(defaults?.string, ...stringKeys),
-        createEmptyObj<BoolKeyType, boolean>(defaults?.boolean, ...boolKeys),
-        createEmptyObj<NumKeyType, number>(defaults?.number, ...numberKeys)
+        createEmptyObj<StrKeyType, string>(
+          defaults?.string ?? "",
+          ...stringKeys
+        ),
+        createEmptyObj<BoolKeyType, boolean>(
+          defaults?.boolean ?? false,
+          ...boolKeys
+        ),
+        createEmptyObj<NumKeyType, number>(defaults?.number ?? 0, ...numberKeys)
       )
     ) as any
   );
