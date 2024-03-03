@@ -1,4 +1,4 @@
-`@kkomjang/react-simple-input` is a typescript library for easily implementing input handlers.
+`@kkoms/react-simple-input` is a typescript library for easily implementing input handlers.
 
 It's declarative and intended to be simple and type-safe when using typescript in react.
 
@@ -7,11 +7,11 @@ Only available on React `18.0.0` or higher
 ## Installation
 
 ```shell
-yarn add @kkomjang/react-simple-input
+yarn add @kkoms/react-simple-input
 # or
-npm install @kkomjang/react-simple-input --save
+npm install @kkoms/react-simple-input --save
 # or
-pnpm add @kkomjang/react-simple-input
+pnpm add @kkom`/react-simple-input
 ```
 
 ## example usage
