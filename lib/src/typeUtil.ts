@@ -2,8 +2,17 @@ export const toReadOnly = <T>(...args: T[]) => {
   return [...args] as const;
 };
 
-export const createEmptyObj = <T extends string, U extends any>() => {
+export const createEmptyObj = <T extends string, U extends any>(
+  fill?: U,
+  ...keys: T[]
+) => {
   const obj = {} as { [K in T]: U };
+
+  if (typeof fill !== "undefined") {
+    keys.forEach((key) => {
+      obj[key] = fill;
+    });
+  }
 
   return obj;
 };

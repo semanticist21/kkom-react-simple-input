@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "moduleResolution": "node",
-    "module": "CommonJS",
+    "moduleResolution": "Bundler",
+    "module": "ES6",
     "declaration": true,
     "outDir": "./dist",
     "esModuleInterop": true,

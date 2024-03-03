@@ -1,41 +1,39 @@
 import * as React from "react";
 
-import { KeyOf } from "./type";
+import { CombineIfNotNever, KeyOf } from "./type";
 import { createEmptyObj, createMatchingObj } from "./typeUtil";
 
 interface UseInputType<
-  T extends readonly string[],
-  E extends readonly string[],
-  U extends readonly string[]
+  T extends string | never,
+  E extends string | never,
+  U extends string | never
 > {
   /**
    * values - state values containing input keys
    */
-  values: { [key in T[number]]: string } & { [key in E[number]]: boolean } & {
-    [key in U[number]]: number;
-  };
+  values: CombineIfNotNever<
+    [T] extends [never] ? never : { [K in T]: string },
+    [E] extends [never] ? never : { [K in E]: boolean },
+    [U] extends [never] ? never : { [K in U]: number }
+  >;
 
   /**
    * setValues - state setter for values
    */
   setValues: React.Dispatch<
     React.SetStateAction<
-      { [K in T[number]]: string } & { [K in E[number]]: boolean } & {
-        [K in U[number]]: number;
-      }
+      CombineIfNotNever<
+        [T] extends [never] ? never : { [K in T]: string },
+        [E] extends [never] ? never : { [K in E]: boolean },
+        [U] extends [never] ? never : { [K in U]: number }
+      >
     >
   >;
 
   /**
    * matching - object containing input keys, use it for giving id or name to input elements
    */
-  matching: Readonly<
-    {
-      [K in T[number]]: K;
-    } & { [K in E[number]]: K } & {
-      [K in U[number]]: K;
-    }
-  >;
+  matching: Readonly<{ [K in T]: K } & { [K in E]: K } & { [K in U]: K }>;
 
   /**
    * handlers - simple input change handlers
@@ -56,32 +54,46 @@ interface UseInputType<
    * keys - readonly array containing input keys
    */
   keys: {
-    allKeys: readonly [...T, ...E, ...U];
-    stringKeys: readonly [...T];
-    boolKeys: readonly [...E];
-    numberKeys: readonly [...U];
+    readonly allKeys: readonly (T | E | U)[];
+    readonly stringKeys: readonly T[];
+    readonly boolKeys: readonly E[];
+    readonly numberKeys: readonly U[];
+  };
+  /**
+   * checks - type checkers for input keys
+   */
+  checks: {
+    isStrKey: (key: string) => key is T[number];
+    isBoolKey: (key: string) => key is E[number];
+    isNumKey: (key: string) => key is U[number];
   };
 }
 interface HandleProps<T extends string, E extends string, U extends string> {
-  strings?: readonly T[];
-  booleans?: readonly E[];
-  numbers?: readonly U[];
+  strings?: T[];
+  booleans?: E[];
+  numbers?: U[];
+  defaults?: {
+    string?: string;
+    boolean?: boolean;
+    number?: number;
+  };
 }
 
 /**
  * @description useInputHandle
  * @param keys input keys
- * @returns {Object} containing values, setValues, handlers, matching, keys
+ * @returns {Object} containing values, setValues, handlers, matching, keys, checks
  */
 export const useInputHandle = <
-  T extends string,
-  E extends string,
-  U extends string
+  T extends string = never,
+  E extends string = never,
+  U extends string = never
 >({
   strings = [],
   booleans = [],
   numbers = [],
-}: HandleProps<T, E, U>): UseInputType<T[], E[], U[]> => {
+  defaults,
+}: HandleProps<T, E, U>): UseInputType<T, E, U> => {
   const stringKeys = [...strings] as const;
   const boolKeys = [...booleans] as const;
   const numberKeys = [...numbers] as const;
@@ -91,15 +103,19 @@ export const useInputHandle = <
   type NumKeyType = KeyOf<typeof numberKeys>;
 
   const [values, setValues] = React.useState<
-    { [key in StrKeyType]: string } & { [key in BoolKeyType]: boolean } & {
-      [key in NumKeyType]: number;
-    }
+    CombineIfNotNever<
+      [T] extends [never] ? never : { [K in StrKeyType]: string },
+      [E] extends [never] ? never : { [K in BoolKeyType]: boolean },
+      [U] extends [never] ? never : { [K in NumKeyType]: number }
+    >
   >(
-    Object.assign(
-      createEmptyObj<StrKeyType, string>(),
-      createEmptyObj<BoolKeyType, boolean>(),
-      createEmptyObj<NumKeyType, number>()
-    )
+    Object.freeze(
+      Object.assign(
+        createEmptyObj<StrKeyType, string>(defaults?.string, ...stringKeys),
+        createEmptyObj<BoolKeyType, boolean>(defaults?.boolean, ...boolKeys),
+        createEmptyObj<NumKeyType, number>(defaults?.number, ...numberKeys)
+      )
+    ) as any
   );
 
   const matching = React.useMemo(() => {
@@ -112,8 +128,22 @@ export const useInputHandle = <
     );
   }, []);
 
+  // type checkers
+  const isStrKey = (key: string): key is StrKeyType => {
+    return stringKeys.indexOf(key as StrKeyType) !== -1;
+  };
+
+  const isBoolKey = (key: string): key is BoolKeyType => {
+    return boolKeys.indexOf(key as BoolKeyType) !== -1;
+  };
+
+  const isNumKey = (key: string): key is NumKeyType => {
+    return numberKeys.indexOf(key as NumKeyType) !== -1;
+  };
+
+  // handlers
   const handleString = React.useCallback(
-    (id?: boolean) => {
+    (isId?: boolean) => {
       return (
         e: React.ChangeEvent<
           HTMLInputElement | HTMLButtonElement | HTMLTextAreaElement
@@ -122,12 +152,12 @@ export const useInputHandle = <
         const { value, id, name } = e.target;
 
         // when id
-        if (id) {
+        if (isId) {
           if (typeof id !== "string") {
             throw new Error("Id is not string or undefined");
           }
 
-          if (stringKeys.indexOf(id as StrKeyType) === -1) {
+          if (!isStrKey(id)) {
             throw new Error("Id is not valid key");
           }
 
@@ -143,7 +173,7 @@ export const useInputHandle = <
             throw new Error("Name is not string or undefined");
           }
 
-          if (stringKeys.indexOf(name as StrKeyType) === -1) {
+          if (!isStrKey(name)) {
             throw new Error("Name is not valid key");
           }
 
@@ -158,17 +188,17 @@ export const useInputHandle = <
   );
 
   const handleCheck = React.useCallback(
-    (id?: boolean) => {
+    (isId?: boolean) => {
       return (e: React.ChangeEvent<HTMLInputElement>) => {
         const { checked, id, name } = e.target;
 
         // when id
-        if (id) {
+        if (isId) {
           if (typeof id !== "string") {
             throw new Error("Id is not string or undefined");
           }
 
-          if (boolKeys.indexOf(id as BoolKeyType) === -1) {
+          if (!isBoolKey(id)) {
             throw new Error("Id is not valid key");
           }
 
@@ -184,7 +214,7 @@ export const useInputHandle = <
             throw new Error("Name is not string or undefined");
           }
 
-          if (boolKeys.indexOf(name as BoolKeyType) === -1) {
+          if (!isBoolKey(name)) {
             throw new Error("Name is not valid key");
           }
 
@@ -199,17 +229,17 @@ export const useInputHandle = <
   );
 
   const handleNumber = React.useCallback(
-    (id?: boolean) => {
+    (isId?: boolean) => {
       return (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, id, name } = e.target;
 
         // when id
-        if (id) {
+        if (isId) {
           if (typeof id !== "string") {
             throw new Error("Id is not string or undefined");
           }
 
-          if (numberKeys.indexOf(id as NumKeyType) === -1) {
+          if (!isNumKey(id)) {
             throw new Error("Id is not valid key");
           }
 
@@ -228,7 +258,7 @@ export const useInputHandle = <
             throw new Error("Name is not string or undefined");
           }
 
-          if (numberKeys.indexOf(name as NumKeyType) === -1) {
+          if (!isNumKey(name)) {
             throw new Error("Name is not valid key");
           }
 
@@ -258,10 +288,17 @@ export const useInputHandle = <
     handleNumber,
   } as const;
 
+  const checks = {
+    isStrKey,
+    isBoolKey,
+    isNumKey,
+  } as const;
+
   return {
     values,
     setValues,
     matching,
+    checks,
     handlers,
     keys,
   };
