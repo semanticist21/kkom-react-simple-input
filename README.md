@@ -22,12 +22,12 @@ import useInputHandle from "./dist";
 function Example() {
   const { values, setValues, handlers, matching, checks, keys } =
     useInputHandle({
-      // use strings, booleans, numbers to set type of input value. keys can be omitted.
+      // use strings, booleans, numbers to set type of input value. Keys can be omitted.
       strings: ["email", "password"],
       booleans: ["checked"],
       numbers: ["age"],
-      // [optional] you can set default value if you want bind value to input element.
-      // If you do not give defaults, string - '', boolean - flase, number - 0.
+      // [optional] you can set default value.
+      // If you do not give defaults, string - '', boolean - false, number - 0.
       defaults: {
         string: "",
         // boolean: false,
