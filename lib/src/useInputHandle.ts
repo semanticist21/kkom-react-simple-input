@@ -109,18 +109,13 @@ export const useInputHandle = <
       [U] extends [never] ? never : { [K in NumKeyType]: number }
     >
   >(
-    Object.freeze(
-      Object.assign(
-        createEmptyObj<StrKeyType, string>(
-          defaults?.string ?? "",
-          ...stringKeys
-        ),
-        createEmptyObj<BoolKeyType, boolean>(
-          defaults?.boolean ?? false,
-          ...boolKeys
-        ),
-        createEmptyObj<NumKeyType, number>(defaults?.number ?? 0, ...numberKeys)
-      )
+    Object.assign(
+      createEmptyObj<StrKeyType, string>(defaults?.string ?? "", ...stringKeys),
+      createEmptyObj<BoolKeyType, boolean>(
+        defaults?.boolean ?? false,
+        ...boolKeys
+      ),
+      createEmptyObj<NumKeyType, number>(defaults?.number ?? 0, ...numberKeys)
     ) as any
   );
 
