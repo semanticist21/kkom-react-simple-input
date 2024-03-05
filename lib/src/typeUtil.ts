@@ -2,7 +2,7 @@ export const toReadOnly = <T>(...args: T[]) => {
   return [...args] as const;
 };
 
-export const createEmptyObj = <T extends string, U extends any>(
+export const createEmptyObj = <T extends string, U>(
   fill?: U,
   ...keys: T[]
 ) => {

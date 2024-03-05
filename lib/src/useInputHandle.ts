@@ -94,9 +94,9 @@ export const useInputHandle = <
   numbers = [],
   defaults,
 }: HandleProps<T, E, U>): UseInputType<T, E, U> => {
-  const stringKeys = [...strings] as const;
-  const boolKeys = [...booleans] as const;
-  const numberKeys = [...numbers] as const;
+  const stringKeys = React.useMemo(() => [...strings] as const, [strings]);
+  const boolKeys = React.useMemo(() => [...booleans] as const, [booleans]);
+  const numberKeys = React.useMemo(() => [...numbers] as const, [numbers]);
 
   type StrKeyType = KeyOf<typeof stringKeys>;
   type BoolKeyType = KeyOf<typeof boolKeys>;
@@ -116,6 +116,7 @@ export const useInputHandle = <
         ...boolKeys
       ),
       createEmptyObj<NumKeyType, number>(defaults?.number ?? 0, ...numberKeys)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ) as any
   );
 
@@ -127,20 +128,29 @@ export const useInputHandle = <
         createMatchingObj<NumKeyType>(...numbers)
       )
     );
-  }, []);
+  }, [booleans, numbers, strings]);
 
   // type checkers
-  const isStrKey = (key: string): key is StrKeyType => {
-    return stringKeys.indexOf(key as StrKeyType) !== -1;
-  };
+  const isStrKey = React.useCallback(
+    (key: string): key is StrKeyType => {
+      return stringKeys.indexOf(key as StrKeyType) !== -1;
+    },
+    [stringKeys]
+  );
 
-  const isBoolKey = (key: string): key is BoolKeyType => {
-    return boolKeys.indexOf(key as BoolKeyType) !== -1;
-  };
+  const isBoolKey = React.useCallback(
+    (key: string): key is BoolKeyType => {
+      return boolKeys.indexOf(key as BoolKeyType) !== -1;
+    },
+    [boolKeys]
+  );
 
-  const isNumKey = (key: string): key is NumKeyType => {
-    return numberKeys.indexOf(key as NumKeyType) !== -1;
-  };
+  const isNumKey = React.useCallback(
+    (key: string): key is NumKeyType => {
+      return numberKeys.indexOf(key as NumKeyType) !== -1;
+    },
+    [numberKeys]
+  );
 
   // handlers
   const handleString = React.useCallback(
@@ -185,7 +195,7 @@ export const useInputHandle = <
         }
       };
     },
-    [matching, setValues]
+    [isStrKey]
   );
 
   const handleCheck = React.useCallback(
@@ -226,7 +236,7 @@ export const useInputHandle = <
         }
       };
     },
-    [matching, setValues]
+    [isBoolKey]
   );
 
   const handleNumber = React.useCallback(
@@ -273,7 +283,7 @@ export const useInputHandle = <
         }
       };
     },
-    [matching, setValues]
+    [isNumKey]
   );
 
   const keys = {

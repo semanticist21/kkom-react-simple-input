@@ -1,7 +1,7 @@
 {
   "name": "@kkoms/react-simple-input",
   "private": false,
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "declarative simplified input/checkbox handlers for react.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -24,6 +24,11 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.61",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "gulp": "^4.0.2",
     "gulp-terser": "^2.1.0",
     "gulp-typescript": "6.0.0-alpha.1",
