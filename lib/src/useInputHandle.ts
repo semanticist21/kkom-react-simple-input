@@ -63,9 +63,9 @@ interface UseInputType<
    * checks - type checkers for input keys
    */
   checks: {
-    isStrKey: (key: string) => key is T[number];
-    isBoolKey: (key: string) => key is E[number];
-    isNumKey: (key: string) => key is U[number];
+    isStrKey: (key: string) => key is T;
+    isBoolKey: (key: string) => key is E;
+    isNumKey: (key: string) => key is U;
   };
 }
 interface HandleProps<T extends string, E extends string, U extends string> {
